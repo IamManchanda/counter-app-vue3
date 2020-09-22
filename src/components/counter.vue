@@ -26,16 +26,21 @@ import { reactive, computed, watchEffect, toRefs } from "vue";
 
 export default {
   setup() {
+    //#region Data & Computed Properties
     const state = reactive({
       count: 0,
       hundredMinusCount: computed(computeHundredMinusCount),
     });
+    //#endregion
 
+    //#region Watchers
     watchEffect(() => {
       logCount();
       logHundredMinusCount();
     });
+    //#endregion
 
+    //#region Methods
     function computeHundredMinusCount() {
       return 100 - state.count;
     }
@@ -59,6 +64,7 @@ export default {
         state.count -= 1;
       }
     }
+    //#endregion
 
     return {
       ...toRefs(state),
