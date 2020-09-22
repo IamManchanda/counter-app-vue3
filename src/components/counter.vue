@@ -22,7 +22,7 @@
 </template>
 
 <script>
-//#region imports
+//#region Imports
 import {
   reactive,
   computed,
@@ -31,7 +31,7 @@ import {
   onMounted,
   onUnmounted,
 } from "vue";
-//#endregion imports
+//#endregion
 
 export default {
   setup() {
