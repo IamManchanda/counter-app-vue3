@@ -3,14 +3,14 @@
     <button
       class="btn btn-success btn-lg"
       :class="count >= 100 ? 'disabled' : ''"
-      @click="increment"
+      @click="handleIncrement"
     >
       Increment
     </button>
     <button
       class="btn btn-danger btn-lg"
       :class="count <= 0 ? 'disabled' : ''"
-      @click="decrement"
+      @click="handleDecrement"
     >
       Decrement
     </button>
@@ -28,25 +28,42 @@ export default {
   setup() {
     const state = reactive({
       count: 0,
-      hundredMinusCount: computed(() => 100 - state.count),
+      hundredMinusCount: computed(computeHundredMinusCount),
     });
 
     watchEffect(() => {
-      console.log(`Current Count: ${state.count}`);
+      logCount();
+      logHundredMinusCount();
     });
+
+    function computeHundredMinusCount() {
+      return 100 - state.count;
+    }
+
+    function logCount() {
+      console.log(`Current Count: ${state.count}`);
+    }
+
+    function logHundredMinusCount() {
+      console.log(`Hundred Minus Count: ${state.hundredMinusCount}`);
+    }
+
+    function handleIncrement() {
+      if (state.count < 100) {
+        state.count += 1;
+      }
+    }
+
+    function handleDecrement() {
+      if (state.count > 0) {
+        state.count -= 1;
+      }
+    }
 
     return {
       ...toRefs(state),
-      increment: () => {
-        if (state.count < 100) {
-          state.count += 1;
-        }
-      },
-      decrement: () => {
-        if (state.count > 0) {
-          state.count -= 1;
-        }
-      },
+      handleIncrement,
+      handleDecrement,
     };
   },
 };
