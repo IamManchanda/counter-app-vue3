@@ -1,12 +1,16 @@
 <template>
   <div class="button-container">
-    <button class="btn btn-success btn-lg" @click="increment">
+    <button
+      class="btn btn-success btn-lg"
+      :class="count >= 100 ? 'disabled' : ''"
+      @click="increment"
+    >
       Increment
     </button>
     <button
       class="btn btn-danger btn-lg"
-      @click="decrement"
       :class="count <= 0 ? 'disabled' : ''"
+      @click="decrement"
     >
       Decrement
     </button>
@@ -34,10 +38,14 @@ export default {
     return {
       ...toRefs(state),
       increment: () => {
-        state.count += 1;
+        if (state.count < 100) {
+          state.count += 1;
+        }
       },
       decrement: () => {
-        state.count -= 1;
+        if (state.count > 0) {
+          state.count -= 1;
+        }
       },
     };
   },
