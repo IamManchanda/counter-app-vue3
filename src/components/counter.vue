@@ -22,11 +22,20 @@
 </template>
 
 <script>
-import { reactive, computed, watchEffect, toRefs } from "vue";
+//#region imports
+import {
+  reactive,
+  computed,
+  watchEffect,
+  toRefs,
+  onMounted,
+  onUnmounted,
+} from "vue";
+//#endregion imports
 
 export default {
   setup() {
-    //#region Data & Computed Properties
+    //#region Reactive References
     const state = reactive({
       count: 0,
       hundredMinusCount: computed(computeHundredMinusCount),
@@ -37,6 +46,16 @@ export default {
     watchEffect(() => {
       logCount();
       logHundredMinusCount();
+    });
+    //#endregion
+
+    //#region Lifecycle hooks
+    onMounted(() => {
+      console.log("Mounted");
+    });
+
+    onUnmounted(() => {
+      console.log("UnMounted");
     });
     //#endregion
 
